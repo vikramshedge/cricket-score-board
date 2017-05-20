@@ -1,0 +1,27 @@
+<ActionBar title="Start new match" class="action-bar">
+    <Button [text]="'Reset'" (tap)="resetDb()"></Button>
+</ActionBar>
+<StackLayout class="page">
+    <StackLayout orientation="horizontal" horizontalAlignement="stretch">
+        <Label [text]="'Full name: '" horizontalAlignment="center" width="30%" textAlignment="right" verticalAlignement="center"></Label>
+        <TextField #fName (textChange)="textChangeHandler(fName.text, 'fname')" width="70%"></TextField>
+    </StackLayout>
+    <StackLayout orientation="horizontal">
+        <Label [text]="'Short name: '" horizontalAlignment="center" width="30%" textAlignment="right" verticalAlignement="center"></Label>
+        <TextField #sName (textChange)="textChangeHandler(sName.text, 'sname')" width="30%"></TextField>
+    </StackLayout>
+    <Label [text]="'F_Name: '+fullName+', S_Name: '+shortName" ></Label>
+    <StackLayout orientation="horizontal">
+        <button [text]="'Create'" class="btn btn-primary" width="25%" (tap)="submit(1)"></button>
+        <button [text]="'Cancel'" width="25%" class="btn btn-warning" (tap)="submit(0)"></button>
+        <button [text]="'Refresh'" width="25%" class="btn btn-info" (tap)="refresh()"></button>
+    </StackLayout>
+    <Label [text]="'----------------------------'" horizontalAlignment="center"></Label>
+
+    <ListView [items]="teams" width="40%">
+        <ng-template let-team="item" let-inx="index">
+            <!--<label [text]="team.shortName"></label>-->
+            <label [text]="team.fullName"></label>
+        </ng-template>
+    </ListView>
+</StackLayout>
