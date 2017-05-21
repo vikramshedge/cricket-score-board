@@ -66,7 +66,7 @@ export class DbService {
         })
     }
 
-    public insert(sqlStr: string): Promise<boolean> {
+    public insert(sqlStr: string): Promise<number> {
         let tempInstance = this;
         let promise: Promise<boolean> = new Promise(function(resolve, reject){
             console.log("Sql: " + sqlStr);

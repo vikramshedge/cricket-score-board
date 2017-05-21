@@ -8,14 +8,17 @@
 <StackLayout margin="1%">
     <match-score-card [matchDetails]="matchDetails"></match-score-card>
     <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
-    <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
-    <StackLayout orientation="horizontal" marginLeft="20%">
-        <Label [text]="'Current Score'" [ngClass]="btn-info" width="25%" style.whiteSpace="normal"></Label>
-        <score-board [teamName]="battingTeam.shortName" [totalScore]="battingScore"></score-board>
-    </StackLayout>
-    <StackLayout orientation="horizontal" marginLeft="20%">
-        <Label [text]="'Previous ball Score'" [ngClass]="btn-info" width="25%" style.whiteSpace="normal"></Label>
-        <score-board [teamName]="battingTeam.shortName" [totalScore]="battingScore"></score-board>
+    <StackLayout orientation="horizontal">
+    <!--<GridLayout columns="*, *">-->
+        <StackLayout row="0" col="0" marginLeft="10%">
+            <score-board [teamName]="battingTeam.shortName" [totalScore]="battingScore"></score-board>
+            <Label [text]="'Current Score'" [ngClass]="btn-info" style.whiteSpace="normal"></Label>
+        </StackLayout>
+        <StackLayout row="0" col="1" marginLeft="5%">
+            <score-board [teamName]="battingTeam.shortName" [totalScore]="battingScore"></score-board>
+            <Label [text]="'Previous ball Score'" [ngClass]="btn-info" style.whiteSpace="normal"></Label>
+        </StackLayout>
+    <!--</GridLayout>-->
     </StackLayout>
     <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
     <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>

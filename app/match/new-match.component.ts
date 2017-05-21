@@ -2,11 +2,15 @@ import { Component, OnInit, AfterViewInit, ViewContainerRef } from "@angular/cor
 import { Router } from "@angular/router";
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 
-import { MatchDetails } from "./match-details";
-import { Team } from "./../team/team";
-import { DbService } from "./../services/db.service";
-
 import { ModalViewComponent } from "./../modal/modal-view.component";
+
+import { MatchDetails } from "./match-details";
+import { TotalScore } from "./../score/total_score/total-score";
+import { Team } from "./../team/team";
+
+import { DbService } from "./../services/db.service";
+import { ScoreService } from "./../services/score.service";
+import { MatchService } from "./../services/match.service";
 
 @Component({
     selector: "new-match",
@@ -20,8 +24,11 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
     matchDetails: MatchDetails;
     teamA: Team;
     teamB: Team;
+    scoreA: TotalScore;
+    scoreB: TotalScore;
     
-    constructor(private router: Router, private dbService: DbService, private _modalService: ModalDialogService, private vcRef: ViewContainerRef){
+    constructor(private router: Router, private _dbService: DbService, private _scoreService: ScoreService,
+        private _matchService: MatchService, private _modalService: ModalDialogService, private vcRef: ViewContainerRef){
 
     }
     
@@ -56,7 +63,28 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
             return 0;
         }
 
+        this.createNewMatch();
+
         this.router.navigate(["edit_score"]);
+    }
+
+    createNewMatch(){
+        let tempInstance = this;
+        this._scoreService.createNewScore().then((newScore: TotalScore) => {
+            tempInstance.scoreA = newScore;
+            this._scoreService.createNewScore().then((newScore: TotalScore) => {
+                tempInstance.scoreB = newScore;
+                this._matchService.createNewMatch(tempInstance.teamA.id, tempInstance.teamB.id, tempInstance.scoreA.id, tempInstance.scoreB.id);                
+            }).catch(error => {
+                return false;
+            });
+        }).catch(error => {
+            return false;
+        });
+    }
+
+    createScore(score: TotalScore) {
+        
     }
 
     cancel(){

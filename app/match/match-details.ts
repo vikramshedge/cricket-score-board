@@ -11,26 +11,38 @@ export class MatchDetails {
     isTeamABatFirst: boolean = true;
     balls: Ball[] = [];
     summary: string;
-    matchId: string;
+    matchId: number;
     time: string;
     matchStarted: boolean = false;
     matchEnd: boolean = false;
 
-    constructor(matchId: string) {
+    constructor(matchId: number, teamA: Team, teamB: Team) {
         this.matchId = matchId;
+        this.teamA = teamA;
+        this.teamB = teamB;
         this.initMatchDetails();
-        this.getMatchDetails(matchId);
+        if (this.matchId == -1){
+            this.createNewMatch();
+        }else {
+            this.getMatchDetails(matchId);
+        }
     }
 
     initMatchDetails(){
-        this.teamA = new Team();
-        this.teamB = new Team();
+        if (this.matchId != -1){
+            this.teamA = new Team();
+            this.teamB = new Team();
+        }
         this.scoreA = new TotalScore();
         this.scoreB = new TotalScore();
     }
 
-    getMatchDetails(matchId: string){
-        if (matchId === "dummy") {
+    createNewMatch(){
+
+    }
+
+    getMatchDetails(matchId: number){
+        if (matchId === -1) {
             this.teamA.fullName = "Cisco Thunderbolts";
             this.teamA.shortName = "CTB";
             this.teamA.id = "ctb";

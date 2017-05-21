@@ -1,6 +1,7 @@
 import { Ball } from "./../ball/ball";
 
 export class TotalScore {
+    id: number;
     allBallS: Ball[] = [];
     runs: number = 0;
     wickets: number = 0;
