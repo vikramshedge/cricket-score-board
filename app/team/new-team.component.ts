@@ -1,4 +1,6 @@
 import {Component, OnInit, AfterViewInit} from "@angular/core"
+import { ModalDialogParams } from "nativescript-angular/modal-dialog";
+
 import {TeamService} from "./../services/team.service";
 import {DbService} from "./../services/db.service";
 import {Team} from "./team";
@@ -15,8 +17,9 @@ export class NewTeamComponent implements OnInit, AfterViewInit {
     teams: Team[] = [];
     fullName: string = "";
     shortName: string = "";
+    selectedTeam: Team;
 
-    constructor(private teamService: TeamService, private dbService: DbService){
+    constructor(private teamService: TeamService, private dbService: DbService, private params: ModalDialogParams){
 
     }
 
@@ -98,7 +101,17 @@ export class NewTeamComponent implements OnInit, AfterViewInit {
     }
 
     cancel(){
-        console.log("Cancelled");
+        this.selectedTeam = null;
+        this.close();
+    }
+
+    selectTeam(team: Team){
+        this.selectedTeam = team;
+        this.close();
+    }
+
+    close(){
+        this.params.closeCallback(this.selectedTeam);
     }
 
     resetDb(){

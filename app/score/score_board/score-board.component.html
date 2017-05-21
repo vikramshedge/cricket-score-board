@@ -1,0 +1,7 @@
+<StackLayout orientation="horizontal" width="40%">
+    <Label [text]="teamName" verticalAignment="center" class="alignLeft" [textWrap]="true" width="50%"></Label>
+    <StackLayout width="50%" verticalAignment="stretch" >
+        <Label [text]="totalScore.runs + '/' + totalScore.wickets" class="alignRight"></Label>
+        <Label [text]="totalScore.overs + '.' + totalScore.ballsOfCurrentOver" class="alignRight"></Label>
+    </StackLayout>
+</StackLayout>

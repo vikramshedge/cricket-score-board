@@ -1,0 +1,10 @@
+<!--<StackLayout orientation="horizontal">
+    <Label *ngFor="let btn of ballProperty.elementList" [text]="'v'"></Label>
+</StackLayout>-->
+
+<GridLayout #ToggleGrid columns="{{colItemSpec}}">
+    <Button *ngFor="let btn of ballProperty.elementList; let i = index;" [ngClass]="btn.isSelected ? btn.selectClass : ''" (tap)="toggleSelection($event, i)" [text]="btn.text" row="0" col="{{i}}"></Button>
+</GridLayout>
+
+<!-- this is another way and faster for toggling ngClass
+    <Button *ngFor="let btn of buttons; let i = index;" [ngClass]="{'btn.selectClass': btn.selected, 'btn-default': !btn.selected}" (tap)="toggleSelection($event, i)" [text]="btn.text" row="0" col="{{i}}"></Button>-->

@@ -1,0 +1,11 @@
+.alignRight {
+    text-align: right;
+    margin-right: 5%;
+    /*background-color: green;*/
+}
+
+.alignLeft {
+    text-align: left;
+    margin-left: 5%;
+    /*background-color: lightgreen;*/
+}

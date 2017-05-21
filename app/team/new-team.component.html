@@ -22,7 +22,7 @@
     <ListView [items]="teams" width="80%">
         <ng-template let-team="item" let-inx="index">
             <!--<label [text]="team.shortName"></label>-->
-            <GridLayout columns="*, 3*">
+            <GridLayout columns="*, 3*" (tap)="selectTeam(team)">
                 <label [text]="team.shortName" row="inx" col="0"></label>
                 <label [text]="team.fullName" row="inx" col="1"></label>
             </GridLayout>

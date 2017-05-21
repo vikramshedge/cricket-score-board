@@ -33,11 +33,11 @@ export class MatchDetails {
         if (matchId === "dummy") {
             this.teamA.fullName = "Cisco Thunderbolts";
             this.teamA.shortName = "CTB";
-            this.teamA.teamId = "ctb";
+            this.teamA.id = "ctb";
 
             this.teamB.fullName = "Cisco Lagaans";
             this.teamB.shortName = "Lagaan";
-            this.teamB.teamId = "lgn";
+            this.teamB.id = "lgn";
         } else {
             //find the matchDetails here from service
         }

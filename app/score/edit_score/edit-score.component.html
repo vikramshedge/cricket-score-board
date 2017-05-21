@@ -1,0 +1,50 @@
+<ActionBar title="Live edit" class="action-bar">
+    <GridLayout columns="*, 3*, *">
+        <Button [text]="'Home'" col="0" [nsRouterLink]="['/home']"></Button>
+        <Label [text]="'Recording score...'" col="1" horizontalAlignment="center" verticalAlignment="center"></Label>
+        <Button [text]="'End'" col="2"></Button>
+    </GridLayout>
+</ActionBar>
+<StackLayout margin="1%">
+    <match-score-card [matchDetails]="matchDetails"></match-score-card>
+    <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
+    <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
+    <StackLayout orientation="horizontal" marginLeft="20%">
+        <Label [text]="'Current Score'" [ngClass]="btn-info" width="25%" style.whiteSpace="normal"></Label>
+        <score-board [teamName]="battingTeam.shortName" [totalScore]="battingScore"></score-board>
+    </StackLayout>
+    <StackLayout orientation="horizontal" marginLeft="20%">
+        <Label [text]="'Previous ball Score'" [ngClass]="btn-info" width="25%" style.whiteSpace="normal"></Label>
+        <score-board [teamName]="battingTeam.shortName" [totalScore]="battingScore"></score-board>
+    </StackLayout>
+    <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
+    <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
+    <StackLayout>
+        <!--<StackLayout orientation="horizontal" height="8%">-->
+        <GridLayout columns="*, 3*, *" rows="*, *, *"  height="50%">
+        <!--<GridLayout columns="auto, auto, auto, auto" height="8%">-->
+            <Label [text]="'Ball Type: '" verticalAlignment="center" row="0" col="0"></Label>
+            <StackLayout row="0" col="1">
+                <my-toggler [ballProperty]="currentBall.ballType" (toggle)="ballTypeToggled($event)"></my-toggler>
+            </StackLayout>
+            <Label [text]="currentBall.ballType.selectedElement.text" [ngClass]="currentBall.ballType.selectedElement.selectClass" verticalAlignment="center" horizontalAlignment="center" row="0" col="2"></Label>
+            <Label [text]="'Runs: '" verticalAlignment="center" row="1" col="0"></Label>
+            <StackLayout row="1" col="1">
+                <my-toggler [ballProperty]="currentBall.run" (toggle)="runToggled($event)"></my-toggler>
+            </StackLayout>
+            <Label [text]="currentBall.run.selectedElement.text" [ngClass]="currentBall.run.selectedElement.selectClass" verticalAlignment="center" horizontalAlignment="center" row="1" col="2"></Label>
+            <Label [text]="'Wicket: '" verticalAlignment="center" row="2" col="0"></Label>
+            <StackLayout row="2" col="1">
+                <my-toggler [ballProperty]="currentBall.wkt" (toggle)="wicketToggled($event)"></my-toggler>
+            </StackLayout>
+            <Label [text]="currentBall.wkt.selectedElement.text" [ngClass]="currentBall.wkt.selectedElement.selectClass" verticalAlignment="center" horizontalAlignment="center" row="2" col="2"></Label>
+        </GridLayout>
+        <!--</StackLayout>-->
+    </StackLayout>
+    <StackLayout orientation="horizontal" marginLeft="20%" marginTop="3%" marginRight="10%">
+        <Label [text]="'Preview before Submit'" [ngClass]="btn-info" width="25%" style.whiteSpace="normal"></Label>
+        <score-board [teamName]="battingTeam.shortName" [totalScore]="previewScore"></score-board>
+    </StackLayout>
+    <Button [text]="'Submit'" width="50%" (tap)="submitCurrentBall()"></Button>
+    <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
+</StackLayout>

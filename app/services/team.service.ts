@@ -62,6 +62,7 @@ export class TeamService {
                 result = result;
                 for (let i=0; i<result.resultSet.length; i++) {
                     let newTeam: Team = new Team();
+                    newTeam.id = result.resultSet[i][0]; 
                     newTeam.fullName = result.resultSet[i][1];
                     newTeam.shortName = result.resultSet[i][2];
                     tempInstance.allTeams.push(newTeam);

@@ -1,23 +1,14 @@
 <ActionBar title="Start new match" class="action-bar"></ActionBar>
 <StackLayout class="page">
     <StackLayout orientation="horizontal">
-        <ListView [items]="teams" width="40%">
-            <ng-template let-team="item" let-inx="index">
-                <label [text]="team.shortName" textAlignment="center"></label>
-            </ng-template>
-        </ListView>
+        <button [text]="teamA == null ? 'Select Team A': teamA.shortName" class="btn btn-primary" width="40%" (tap)="createModalView('A')"></button>
         <Label [text]="'Vs.'" width="20%" textAlignment="center" verticalAlignment="center"></Label>
-        <ListView [items]="teams" width="40%">
-            <ng-template let-team="item" let-inx="index">
-                <label [text]="team.shortName" textAlignment="center"></label>
-            </ng-template>
-        </ListView>
+        <button [text]="teamB == null ? 'Select Team B': teamB.shortName" class="btn btn-primary" width="40%" (tap)="createModalView('B')"></button>
     </StackLayout>
     <!--<match-score-card [matchId]="liveMatchId" [nsRouterLink]="['/match']"></match-score-card>-->
     <StackLayout orientation="horizontal">
-        <button [text]="'Start'" class="btn btn-primary" width="25%" (tap)="submit(1)"></button>
+        <button [text]="'Start'" class="btn btn-primary" width="25%" (tap)="submit()"></button>
         <!--<button [text]="'New Team'" class="btn btn-primary" width="25%" [nsRouterLink]="['/create_team']"></button>-->
-        <button [text]="'New Team'" class="btn btn-primary" width="25%" (tap)="createModalView({})"></button>
-        <button [text]="'Cancel'" width="25%" class="btn btn-warning" (tap)="submit(0)"></button>
+        <button [text]="'Cancel'" width="25%" class="btn btn-warning" (tap)="cancel()"></button>
     </StackLayout>
 </StackLayout>

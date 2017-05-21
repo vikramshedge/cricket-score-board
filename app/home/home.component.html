@@ -1,0 +1,28 @@
+<!--<ActionBar title="Cricket Score Board" class="action-bar"></ActionBar>-->
+<ActionBar title="CSB" class="action-bar"></ActionBar>
+<StackLayout class="page">
+    <label [text]="varTime"></label>
+    <StackLayout orientation="horizontal">
+        <button [text]="'Start New'" class="btn btn-info" width="25%" [nsRouterLink]="['/create_match']"></button>
+        <button [text]="'Refresh'" width="25%" class="btn btn-warning" (tap)="refresh()"></button>
+    </StackLayout>
+    <!--<match-score-card [matchId]="liveMatchId" [nsRouterLink]="['/match']"></match-score-card>-->
+    <ListView [items]="items">
+        <ng-template let-item="item" let-inx="index">
+            <label [text]="item"></label>
+        </ng-template>
+    </ListView>
+</StackLayout>
+<!--<StackLayout class="page">
+    <TextField #fName (textChange)="nameChange(fName.text, 'fname')" [text]="'vikram'"></TextField>
+    <TextField #lName (textChange)="nameChange(lName.text, 'lname')" ></TextField>
+    <Button [text]="'Add'" (tap)="insert()"></Button>
+    <Button [text]="'Refresh'" (tap)="fetch()"></Button>
+    <Label [text]="'First Name:'+fName.text+', Last Name:'+lName.text"></Label>
+    <Label [text]="'----------------------------'"></Label>
+    <ListView [items]="people">
+        <template let-person="item">
+            <Label text="{{ person.firstname }} {{ person.lastname }}"></Label>
+        </template>
+    </ListView>
+</StackLayout>-->

@@ -4,6 +4,6 @@ export class Team {
     fullName: string;
     shortName: string;
     players: Player[];
-    teamId: string;
+    id: string;
     logo: string;
 }
