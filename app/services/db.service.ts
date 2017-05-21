@@ -35,20 +35,26 @@ export class DbService {
         this.init();
     }
     
-    init(){
-        (new Sqlite("my.db")).then(db => {
-            this.database = db;
-            this.createTable(this.sqlCreateTable.match_details);
-            this.createTable(this.sqlCreateTable.team_details);
-            this.createTable(this.sqlCreateTable.score_details);
-            this.createTable(this.sqlCreateTable.ball_details);
-            this.createTable(this.sqlCreateTable.player_details);
-            console.log("All Tables created!!");
-            this.tablesCreated = 1;
-        }, error => {
-            console.log("Open db error: ", error);
-            this.tablesCreated = 2;
+    init(): Promise<boolean> {
+        let tempInstance = this;
+        let promise: Promise<boolean> = new Promise(function(resolve, reject){
+            (new Sqlite("my.db")).then(db => {
+                tempInstance.database = db;
+                tempInstance.createTable(tempInstance.sqlCreateTable.match_details);
+                tempInstance.createTable(tempInstance.sqlCreateTable.team_details);
+                tempInstance.createTable(tempInstance.sqlCreateTable.score_details);
+                tempInstance.createTable(tempInstance.sqlCreateTable.ball_details);
+                tempInstance.createTable(tempInstance.sqlCreateTable.player_details);
+                console.log("All Tables created!!");
+                tempInstance.tablesCreated = 1;
+                return resolve(true);
+            }, error => {
+                console.log("Open db error: ", error);
+                tempInstance.tablesCreated = 2;
+                return reject(error);
+            });
         });
+        return promise;
     }
 
     createTable(tableObj: any){
@@ -78,33 +84,52 @@ export class DbService {
     public fetch(sqlStr: string): Promise<Result> {
         let result: Result = new Result();
         console.log("Sql: " + sqlStr);
-        let tmpDb = this;
+        let tempInstance = this;
         let promise: Promise<Result> = new Promise(function(resolve, reject){
-            tmpDb.database.all(sqlStr).then(rows => {
-                console.log("get all success");
-                result.resultSet = rows;
-                result.status = 1;
-                console.log(rows.length);
-                return resolve(result);
-            }, error => {
-                console.log("SELECT ERROR", error);
-                result.status = 2;
-                result.resultSet.push(error);
-                return reject(result);
+            tempInstance.init().then(isSuccess => {
+                console.log("DbService db: " + (tempInstance.database == undefined));
+                console.log("DbService db: " + (tempInstance.database == null));
+                tempInstance.database.all(sqlStr).then(rows => {
+                    console.log("get all success");
+                    result.resultSet = rows;
+                    result.status = 1;
+                    console.log(rows.length);
+                    return resolve(result);
+                }, error => {
+                    console.log("SELECT ERROR", error);
+                    result.status = 2;
+                    result.resultSet.push(error);
+                    return reject(result);
+                });
+            }).catch(error => {
+                console.log("Error: "+error);
             });
         });
         return promise;
     }
 
-    public deleteAll(): Promise<boolean> {
+    public clearAllTables(): Promise<boolean> {
         let tempInstance = this;
         let promise: Promise<boolean> = new Promise(function(resolve, reject) {
-            tempInstance.database.execSQL('DELETE FROM match_details');
-            tempInstance.database.execSQL('DELETE FROM team_details');
-            tempInstance.database.execSQL('DELETE FROM score_details');
-            tempInstance.database.execSQL('DELETE FROM ball_details');
-            tempInstance.database.execSQL('DELETE FROM player_details');
+            tempInstance.clearTable('match_details');
+            tempInstance.clearTable('team_details');
+            tempInstance.clearTable('score_details');
+            tempInstance.clearTable('ball_details');
+            tempInstance.clearTable('player_details');
             return resolve(true);
+        });
+        return promise;
+    }
+
+    public clearTable(tableName: string): Promise<boolean> {
+        let tempInstance = this;
+        let promise: Promise<boolean> = new Promise(function(resolve, reject) {
+            tempInstance.init().then(isSuccess => {
+                tempInstance.database.execSQL('DELETE FROM '+tableName);
+                return resolve(true);
+            }).catch(error => {
+                console.log("Error: " + error);
+            });
         });
         return promise;
     }

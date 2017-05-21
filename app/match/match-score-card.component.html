@@ -1,0 +1,9 @@
+<StackLayout width="80%" left="10%">
+    <StackLayout orientation="horizontal">
+        <score-board [teamName]="matchDetails.teamA.shortName" [totalScore]="matchDetails.scoreA"></score-board>
+        <Label width="20%" [text]="'Vs.'" textAlignment="center"></Label>
+        <score-board [teamName]="matchDetails.teamB.shortName" [totalScore]="matchDetails.scoreB"></score-board>
+    </StackLayout>
+    <!--<Label [text]="'Match current summary for e.g. 6 runs from 4 balls to win'" textAlignment="center" style.color="red" style.whiteSpace="normal"></Label>-->
+    <Label [text]="matchDetails.summary" textAlignment="center" style.color="red" style.whiteSpace="normal"></Label>
+</StackLayout>

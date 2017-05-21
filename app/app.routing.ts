@@ -2,10 +2,11 @@ import { NgModule } from "@angular/core";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
 
+import { NewMatchComponent } from "./match/new-match.component";
 import { NewTeamComponent } from "./team/new-team.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/create_team", pathMatch: "full" },
+    { path: "", redirectTo: "/create_match", pathMatch: "full" },
     // { path: "", redirectTo: "/home", pathMatch: "full" },
     // { path: "items", component: ItemsComponent },
     // { path: "item/:id", component: ItemDetailComponent },
@@ -13,7 +14,7 @@ const routes: Routes = [
     // { path: "match", component: MatchScoreCardComponent },
     // { path: "edit_score", component: EditScoreComponent },
     // { path: "toggler", component: TogglerComponent },
-    // { path: "create_match", component: NewMatchComponent },
+    { path: "create_match", component: NewMatchComponent },
     { path: "create_team", component: NewTeamComponent }
 ];
 

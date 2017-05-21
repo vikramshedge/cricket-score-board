@@ -13,8 +13,8 @@ import {Team} from "./team";
 export class NewTeamComponent implements OnInit, AfterViewInit {
 
     teams: Team[] = [];
-    fullName: string = "NA";
-    shortName: string = "NA";
+    fullName: string = "";
+    shortName: string = "";
 
     constructor(private teamService: TeamService, private dbService: DbService){
 
@@ -28,10 +28,12 @@ export class NewTeamComponent implements OnInit, AfterViewInit {
     }
 
     textChangeHandler(value: string, source: string){
-        if (source === "fname") {
-            this.fullName = value;
-        } else {
-            this.shortName = value;
+        if (source === "sname") {
+            if (value.length > 3) {
+                console.log("short name changd: "+ value + ": " + value.length);
+                this.shortName = value.substr(0,3);
+                // add toast here
+            }
         }
     }
 
@@ -50,20 +52,35 @@ export class NewTeamComponent implements OnInit, AfterViewInit {
         });
     }
 
-    submit(submitCode: number){
-        if (submitCode === 0){
-            console.log("Cancelled");
-        } else {
-            for (let i=0; i<this.teams.length; i++) {
-                if (this.shortName === this.teams[i].shortName) {
-                    alert("Short Name already in use, please select another");
-                    return 0;
-                }
-                if (this.fullName === this.teams[i].fullName){
-                    alert("Full Name already in use, please select another");
-                    return 0;
-                }
+    validate(): boolean {
+        if (this.shortName.length<1){
+            alert("ShortName cann't be empty");
+            return false;
+        }
+
+        if (this.fullName.length<1){
+            alert("Fullname cann't be empty");
+            return false;
+        }
+
+        for (let i=0; i<this.teams.length; i++) {
+            if (this.shortName === this.teams[i].shortName) {
+                alert("Short Name already in use, please select another");
+                return false;
             }
+            if (this.fullName === this.teams[i].fullName){
+                alert("Full Name already in use, please select another");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    submit(submitCode: number){
+
+        let isValidInput: boolean = this.validate();
+
+        if (isValidInput){
             let newTeam: Team = new Team();
             newTeam.fullName = this.fullName;
             newTeam.shortName = this.shortName;
@@ -75,12 +92,18 @@ export class NewTeamComponent implements OnInit, AfterViewInit {
             }).catch(error => {
                 console.log("Error in creating team: "+error);
             });
+            this.shortName = "";
+            this.fullName = "";
         }
+    }
+
+    cancel(){
+        console.log("Cancelled");
     }
 
     resetDb(){
         let tempInstance = this;
-        this.dbService.deleteAll().then(isSuccess => {
+        this.dbService.clearTable('team_details').then(isSuccess => {
             tempInstance.refresh();
         });
     }
