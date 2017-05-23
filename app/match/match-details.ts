@@ -16,16 +16,14 @@ export class MatchDetails {
     matchStarted: boolean = false;
     matchEnd: boolean = false;
 
-    constructor(matchId: number, teamA: Team, teamB: Team) {
+    constructor(matchId: number, teamA: Team, teamB: Team, scoreA: TotalScore, scoreB: TotalScore, matchStarted, matchEnd) {
         this.matchId = matchId;
         this.teamA = teamA;
         this.teamB = teamB;
-        this.initMatchDetails();
-        if (this.matchId == -1){
-            this.createNewMatch();
-        }else {
-            this.getMatchDetails(matchId);
-        }
+        this.scoreA = scoreA;
+        this.scoreB = scoreB;
+        this.matchStarted = matchStarted;
+        this.matchEnd = matchEnd;
     }
 
     initMatchDetails(){
