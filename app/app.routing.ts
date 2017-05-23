@@ -12,13 +12,13 @@ import { NewTeamComponent } from "./team/new-team.component";
 import { EditScoreComponent } from "./score/edit_score/edit-score.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/create_match", pathMatch: "full" },
-    // { path: "", redirectTo: "/home", pathMatch: "full" },
+    // { path: "", redirectTo: "/create_match", pathMatch: "full" },
+    { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "items", component: ItemsComponent },
     { path: "item/:id", component: ItemDetailComponent },
     { path: "home", component: HomeComponent },
     { path: "match", component: MatchScoreCardComponent },
-    { path: "edit_score", component: EditScoreComponent },
+    { path: "edit_score/:matchId", component: EditScoreComponent },
     { path: "toggler", component: TogglerComponent },
     { path: "create_match", component: NewMatchComponent },
     { path: "create_team", component: NewTeamComponent }

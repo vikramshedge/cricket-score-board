@@ -45,11 +45,11 @@ export class MatchDetails {
         if (matchId === -1) {
             this.teamA.fullName = "Cisco Thunderbolts";
             this.teamA.shortName = "CTB";
-            this.teamA.id = "ctb";
+            this.teamA.id = -1;
 
             this.teamB.fullName = "Cisco Lagaans";
             this.teamB.shortName = "Lagaan";
-            this.teamB.id = "lgn";
+            this.teamB.id = -1;
         } else {
             //find the matchDetails here from service
         }

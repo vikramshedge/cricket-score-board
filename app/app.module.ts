@@ -6,7 +6,6 @@ import { AppComponent } from "./app.component";
 
 import { ModalDialogService } from "nativescript-angular/modal-dialog";
 
-import { ItemService } from "./item/item.service";
 import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
 import { HomeComponent } from "./home/home.component";
@@ -18,9 +17,12 @@ import { NewMatchComponent } from "./match/new-match.component";
 import { NewTeamComponent } from "./team/new-team.component";
 import { ModalViewComponent } from "./modal/modal-view.component";
 
+import { ItemService } from "./item/item.service";
+import { ScoreService } from "./services/score.service";
 import { TeamService } from "./services/team.service";
 // import { BallService } from "./services/ball.service";
 import { DbService } from "./services/db.service";
+import { MatchService } from "./services/match.service";
 
 @NgModule({
   declarations: [
@@ -48,6 +50,9 @@ import { DbService } from "./services/db.service";
     AppRoutingModule
   ],
   providers: [
+    ItemService,
+    MatchService,
+    ScoreService,
     ModalDialogService,
     TeamService,
     DbService

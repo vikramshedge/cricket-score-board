@@ -24,7 +24,7 @@ export class EditScoreComponent implements OnInit {
 
     ngOnInit(){
         this.matchId = "dummy";
-        this.matchDetails = new MatchDetails("dummy");
+        this.matchDetails = new MatchDetails(-1,null,null);
         if (this.matchDetails.balls.length > 0) {
             this.currentBall = this.matchDetails.balls[this.matchDetails.balls.length-1];
         } else {

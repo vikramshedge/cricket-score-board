@@ -68,15 +68,19 @@ export class DbService {
 
     public insert(sqlStr: string): Promise<number> {
         let tempInstance = this;
-        let promise: Promise<boolean> = new Promise(function(resolve, reject){
-            console.log("Sql: " + sqlStr);
-            tempInstance.database.execSQL(sqlStr).then(id => {
-                console.log("INSERT RESULT", id);
-                return resolve(id);
-            }, error => {
-                console.log("INSERT ERROR", error);
-                reject(error);
-            });
+        let promise: Promise<number> = new Promise(function(resolve, reject){
+            tempInstance.init().then(isSuccess => {
+                console.log("Sql: " + sqlStr);
+                tempInstance.database.execSQL(sqlStr).then(id => {
+                    console.log("INSERT RESULT", id);
+                    return resolve(id);
+                }, error => {
+                    console.log("INSERT ERROR", error);
+                    return reject(error);
+                });
+            }).catch(error => {
+                return reject(error);
+            })
         });
         return promise;
     }
@@ -87,8 +91,6 @@ export class DbService {
         let tempInstance = this;
         let promise: Promise<Result> = new Promise(function(resolve, reject){
             tempInstance.init().then(isSuccess => {
-                console.log("DbService db: " + (tempInstance.database == undefined));
-                console.log("DbService db: " + (tempInstance.database == null));
                 tempInstance.database.all(sqlStr).then(rows => {
                     console.log("get all success");
                     result.resultSet = rows;
@@ -102,7 +104,7 @@ export class DbService {
                     return reject(result);
                 });
             }).catch(error => {
-                console.log("Error: "+error);
+                return reject(error);
             });
         });
         return promise;
@@ -125,10 +127,14 @@ export class DbService {
         let tempInstance = this;
         let promise: Promise<boolean> = new Promise(function(resolve, reject) {
             tempInstance.init().then(isSuccess => {
-                tempInstance.database.execSQL('DELETE FROM '+tableName);
-                return resolve(true);
+                tempInstance.database.execSQL('DELETE FROM '+tableName).then(isSuccess =>{
+                    return resolve(true);
+                }).catch(error => {
+                    return reject(false);
+                });
             }).catch(error => {
                 console.log("Error: " + error);
+                return reject(false);
             });
         });
         return promise;

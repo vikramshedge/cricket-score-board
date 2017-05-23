@@ -64,8 +64,6 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
         }
 
         this.createNewMatch();
-
-        this.router.navigate(["edit_score"]);
     }
 
     createNewMatch(){
@@ -74,17 +72,18 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
             tempInstance.scoreA = newScore;
             this._scoreService.createNewScore().then((newScore: TotalScore) => {
                 tempInstance.scoreB = newScore;
-                this._matchService.createNewMatch(tempInstance.teamA.id, tempInstance.teamB.id, tempInstance.scoreA.id, tempInstance.scoreB.id);                
+                this._matchService.createNewMatch(tempInstance.teamA.id, tempInstance.teamB.id, tempInstance.scoreA.id, tempInstance.scoreB.id).then(matchDetails => {
+                    tempInstance.matchDetails = matchDetails;
+                    this.router.navigate(["edit_score", matchDetails.matchEnd]);
+                }).catch(error => {
+                    console.log("Error in creating match: " + error);
+                })
             }).catch(error => {
                 return false;
             });
         }).catch(error => {
             return false;
         });
-    }
-
-    createScore(score: TotalScore) {
-        
     }
 
     cancel(){

@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 
 import { Item } from "./../item/item";
 import { ItemService } from "./../item/item.service";
+import { MatchService } from "./services/match.service";
 var Sqlite = require("nativescript-sqlite");
 
 @Component({
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
         {"firstname": "tushar", "lastname": "shedge"}
     ];
 
-    constructor(private itemService: ItemService) { }
+    constructor(private itemService: ItemService, private matchService: MatchService) { }
 
     ngOnInit(): void {
         // this.items = this.itemService.getItems();

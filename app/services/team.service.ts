@@ -47,10 +47,25 @@ export class TeamService {
         return promise;
     }
 
-    getTeam(teamId: number){
+    getTeam(teamId: number): Promise<Team> {
+        let tempInstance = this;
         let sqlStr: string = "SELECT * FROM team_details WHERE id = " + teamId;
-        // this.dbService.fetch(sqlStr).then((result: Result) => {
-        // });
+        let promise: Promise<Team> = new Promise(function(resolve, reject){
+            tempInstance.dbService.fetch(sqlStr).then((result: Result) => {
+                if (result.resultSet.length > 0){
+                    let newTeam = new Team();
+                    newTeam.id = result.resultSet[0][0];
+                    newTeam.id = result.resultSet[0][1];
+                    newTeam.id = result.resultSet[0][2];
+                    return resolve(newTeam);
+                } else {
+                    return reject("No team foud for this id: "+teamId);
+                }
+            }).catch(error => {
+                return reject(error);
+            })
+        });
+        return promise;
     }
 
     getAllTeams(): Promise<Team[]> {

@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+
+import { Result } from "./result";
 import { TotalScore } from "./../score/total_score/total-score";
 import { DbService } from "./db.service";
 
@@ -9,19 +11,36 @@ export class ScoreService {
 
     createNewScore(): Promise<TotalScore>{
         let tempInstance = this;
-        let sqlStr: string = ""; // to be created
+        let newScore: TotalScore = new TotalScore();
+        let sqlStr: string = "INSERT INTO score_details (runs, wickets, balls, ballsOfCurrentOver, overs) VALUES ('"+newScore.runs+"', '"+newScore.wickets+"', '"+newScore.balls+"', '"+newScore.ballsOfCurrentOver+"', '"+newScore.overs+"')";
         let promise: Promise<TotalScore>  = new Promise(function(resolve, reject) {
-            tempInstance._dbService.init().then((isSuccess: boolean) => {
-                tempInstance._dbService.insert(sqlStr).then( id => {
-                    let newScore: TotalScore = new TotalScore();
-                    newScore.id = id;
-                    resolve(newScore);
-                }).catch(error => {
-                    console.log("Error in creating score:" + error);
-                });
+            tempInstance._dbService.insert(sqlStr).then( id => {
+                newScore.id = id;
+                resolve(newScore);
             }).catch(error => {
-                console.log("Error in db init: " + error);
-            })
+                console.log("Error in creating score:" + error);
+                return reject(error);
+            });
+        });
+        return promise;
+    }
+
+    getScore(scoreId: number):Promise<TotalScore> {
+        let tempInstance = this;
+        let sqlStr = "SELECT * FROM score_details WHERE id = " + scoreId;
+        let promise: Promise<TotalScore> = new Promise(function(resolve, reject) {
+            tempInstance._dbService.fetch(sqlStr).then((result: Result) => {
+                let newScore: TotalScore = new TotalScore();
+                newScore.id = scoreId;
+                newScore.runs = result.resultSet[0][1];
+                newScore.wickets = result.resultSet[0][2];
+                newScore.balls = result.resultSet[0][3];
+                newScore.ballsOfCurrentOver = result.resultSet[0][4];
+                newScore.overs = result.resultSet[0][5];
+                return resolve(newScore);
+            }).catch(error => {
+                return reject(error);
+            });
         });
         return promise;
     }
