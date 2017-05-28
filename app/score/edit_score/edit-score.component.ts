@@ -4,6 +4,8 @@ import { MatchDetails } from "./../../match/match-details";
 import { Team } from "./../../team/team";
 import { TotalScore } from "./../total_score/total-score";
 
+import { MatchService } from "./../../services/match.service"
+
 @Component({
     selector : "edit-score",
     moduleId : module.id,
@@ -14,7 +16,7 @@ import { TotalScore } from "./../total_score/total-score";
 
 export class EditScoreComponent implements OnInit {
     currentBall: Ball;
-    matchId: string;
+    matchId: number;
     matchDetails: MatchDetails;
     battingTeam: Team;
     battingScore: TotalScore;
@@ -22,20 +24,27 @@ export class EditScoreComponent implements OnInit {
     bowlingScore: TotalScore;
     previewScore: TotalScore;
 
-    ngOnInit(){
-        this.matchId = "dummy";
-        this.matchDetails = new MatchDetails(-1,null,null);
-        if (this.matchDetails.balls.length > 0) {
-            this.currentBall = this.matchDetails.balls[this.matchDetails.balls.length-1];
-        } else {
-            console.log("Creating new ball");
-            this.currentBall = new Ball();
-        }
+    constructor(private _matchService: MatchService){
 
-        this.getCurrentTeam();
-        this.calculatePreviewScore();
-        // console.log("Batting team, in EditScore: ");
-        // console.dump(this.battingTeam.shortName);
+    }
+
+    ngOnInit(){
+        this._matchService.getMatch(this.matchId).then((match: MatchDetails)=>{
+            this.matchDetails = match;
+            if (this.matchDetails.balls.length > 0) {
+                this.currentBall = this.matchDetails.balls[this.matchDetails.balls.length-1];
+            } else {
+                console.log("Creating new ball");
+                this.currentBall = new Ball();
+            }
+
+            this.getCurrentTeam();
+            this.calculatePreviewScore();
+            // console.log("Batting team, in EditScore: ");
+            // console.dump(this.battingTeam.shortName);
+        }).catch(error => {
+            console.log("Edid score: unable to get match details, error: " + error);
+        });
     }
 
     ballTypeToggled(event: any){

@@ -72,7 +72,7 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
             tempInstance.scoreA = newScore;
             this._scoreService.createNewScore().then((newScore: TotalScore) => {
                 tempInstance.scoreB = newScore;
-                this._matchService.createNewMatch(tempInstance.teamA.id, tempInstance.teamB.id, tempInstance.scoreA.id, tempInstance.scoreB.id).then(matchDetails => {
+                this._matchService.createNewMatch(tempInstance.teamA, tempInstance.teamB, true).then(matchDetails => {
                     tempInstance.matchDetails = matchDetails;
                     this.router.navigate(["edit_score", matchDetails.matchEnd]);
                 }).catch(error => {
