@@ -1,4 +1,6 @@
 import { Component, OnInit,OnChanges, SimpleChanges, Input } from "@angular/core";
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 import { Ball } from "./../ball/ball";
 import { MatchDetails } from "./../../match/match-details";
 import { Team } from "./../../team/team";
@@ -11,7 +13,7 @@ import { MatchService } from "./../../services/match.service"
     moduleId : module.id,
     templateUrl: "./edit-score.component.html",
     styleUrls: ['./edit-score.component.css'],
-    inputs: ['matchId']
+    inputs: ['matchDetails']
 })
 
 export class EditScoreComponent implements OnInit {
@@ -24,11 +26,11 @@ export class EditScoreComponent implements OnInit {
     bowlingScore: TotalScore;
     previewScore: TotalScore;
 
-    constructor(private _matchService: MatchService){
-
-    }
+    constructor(private _matchService: MatchService, private route: ActivatedRoute){}
 
     ngOnInit(){
+        console.log("Edit score: activatedRouteParams: ");
+        console.log(this.route.params);
         this._matchService.getMatch(this.matchId).then((match: MatchDetails)=>{
             this.matchDetails = match;
             if (this.matchDetails.balls.length > 0) {

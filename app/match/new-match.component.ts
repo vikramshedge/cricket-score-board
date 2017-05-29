@@ -68,26 +68,17 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
 
     createNewMatch(){
         let tempInstance = this;
-        this._scoreService.createNewScore().then((newScore: TotalScore) => {
-            tempInstance.scoreA = newScore;
-            this._scoreService.createNewScore().then((newScore: TotalScore) => {
-                tempInstance.scoreB = newScore;
-                this._matchService.createNewMatch(tempInstance.teamA, tempInstance.teamB, true).then(matchDetails => {
-                    tempInstance.matchDetails = matchDetails;
-                    this.router.navigate(["edit_score", matchDetails.matchEnd]);
-                }).catch(error => {
-                    console.log("Error in creating match: " + error);
-                })
-            }).catch(error => {
-                return false;
-            });
+        this._matchService.createNewMatch(tempInstance.teamA, tempInstance.teamB, true).then(matchDetails => {
+            tempInstance.matchDetails = matchDetails;
+            console.log("Match details captured: "+ matchDetails.matchId);
+            this.router.navigate(["edit_score", {"data":matchDetails}]);
+            // this.router.navigate(["edit_score"]);
         }).catch(error => {
-            return false;
+            console.log("Error in creating match: " + error);
         });
     }
 
     cancel(){
-
     }
 
     createModalView(args) {

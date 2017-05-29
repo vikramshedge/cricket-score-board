@@ -32,7 +32,7 @@ export class MatchService {
                     let sqlStr = "INSERT INTO match_details (team_1_id, team_2_id, score_1_id, score_2_id, matchstarted, matchend) VALUES ('"+teamA.id +"', '"+teamB.id+"', '"+scoreA.id+"', '"+scoreB.id+"', '"+matchStarted+"', '"+false+"')";
                     tempInstance._dbService.insert(sqlStr).then( id => {
                         let newMatch: MatchDetails = new MatchDetails(id,teamA,teamB,scoreA,scoreB,matchStarted, false);
-                        resolve(newMatch);
+                        return resolve(newMatch);
                     }).catch(error => reject(error));
                 }).catch(error => reject(error));
             }).catch(error => reject(error));

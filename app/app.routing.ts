@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: "item/:id", component: ItemDetailComponent },
     { path: "home", component: HomeComponent },
     { path: "match", component: MatchScoreCardComponent },
-    { path: "edit_score/:matchId", component: EditScoreComponent },
+    { path: "edit_score", component: EditScoreComponent },
     { path: "toggler", component: TogglerComponent },
     { path: "create_match", component: NewMatchComponent },
     { path: "create_team", component: NewTeamComponent }
