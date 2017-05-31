@@ -1,6 +1,8 @@
 import { Component, OnInit,OnChanges, SimpleChanges, Input } from "@angular/core";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import 'rxjs/add/operator/switchMap';
+
 import { Ball } from "./../ball/ball";
 import { MatchDetails } from "./../../match/match-details";
 import { Team } from "./../../team/team";
@@ -29,8 +31,12 @@ export class EditScoreComponent implements OnInit {
     constructor(private _matchService: MatchService, private route: ActivatedRoute){}
 
     ngOnInit(){
-        console.log("Edit score: activatedRouteParams: ");
-        console.log(this.route.params);
+        this.route.params.switchMap((params: Params) => {
+            console.log("Edit score: activatedRouteParams: ");
+            console.dir(this.route.params["data"]);
+            // this.matchDetails = 
+            return this.route.data;
+        });
         this._matchService.getMatch(this.matchId).then((match: MatchDetails)=>{
             this.matchDetails = match;
             if (this.matchDetails.balls.length > 0) {

@@ -1,4 +1,4 @@
-<StackLayout width="80%" left="10%">
+<StackLayout width="80%" left="10%" (tap)="clickEventHandler($event)">
     <StackLayout orientation="horizontal">
         <score-board [teamName]="matchDetails.teamA.shortName" [totalScore]="matchDetails.scoreA"></score-board>
         <Label width="20%" [text]="'Vs.'" textAlignment="center"></Label>

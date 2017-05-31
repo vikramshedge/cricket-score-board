@@ -98,7 +98,7 @@ export class MatchService {
                                     let varMatch: MatchDetails = new MatchDetails(result.resultSet[i][0], team1, team2, score1, score2,matchStarted,matchEnd);
                                     matches.push(varMatch);
                                     if (result.resultSet.length === matches.length) {
-                                        return resolve(varMatch);
+                                        return resolve(matches);
                                     }
                                 }).catch(error => reject(error));
                             }).catch(error => reject(error));

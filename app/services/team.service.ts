@@ -55,8 +55,8 @@ export class TeamService {
                 if (result.resultSet.length > 0){
                     let newTeam = new Team();
                     newTeam.id = result.resultSet[0][0];
-                    newTeam.id = result.resultSet[0][1];
-                    newTeam.id = result.resultSet[0][2];
+                    newTeam.fullName = result.resultSet[0][1];
+                    newTeam.shortName = result.resultSet[0][2];
                     return resolve(newTeam);
                 } else {
                     return reject("No team foud for this id: "+teamId);

@@ -2,8 +2,10 @@ import * as dialogs from "ui/dialogs";
 import { Component, OnInit } from "@angular/core";
 
 import { Item } from "./../item/item";
+import { MatchDetails } from "./../match/match-details";
 import { ItemService } from "./../item/item.service";
 import { MatchService } from "./../services/match.service";
+
 var Sqlite = require("nativescript-sqlite");
 
 @Component({
@@ -15,15 +17,7 @@ var Sqlite = require("nativescript-sqlite");
 export class HomeComponent implements OnInit {
     items: string[];
     varTime: string;
-    liveMatchId: string = "live_sample_match";
-
-    fName: any = {"text": "vik"};
-    lName: any = {"text": "she"};
-
-    people = [
-        {"firstname": "vikram", "lastname": "shedge"},
-        {"firstname": "tushar", "lastname": "shedge"}
-    ];
+    onGoingMatches: MatchDetails[];
 
     constructor(private _itemService: ItemService, private _matchService: MatchService) { }
 
@@ -31,19 +25,22 @@ export class HomeComponent implements OnInit {
         // this.items = this.itemService.getItems();
         this.items = ['Live score here', 'recent results here', 'upcoming matches here'];
         this.varTime = Date().toString();
+        this._matchService.getAllMatches().then((matches: MatchDetails[])=>{
+            this.onGoingMatches = matches;
+            console.log("Count of matches: "+this.onGoingMatches.length);
+        }).catch(error => {
+            console.log("Home.component.ts: Unable to get all matches");
+        })
+    }
+
+    scoreCardClicked(eventData: any){
+        console.log("Match card clicked in home:");
+        console.dir(eventData);
     }
 
     showAlert(eventData){
         console.log("Start new match clicked");
         dialogs.alert("New match clicked");
-    }
-
-    nameChange(value, source){
-        if (source === 'fname') {
-            this.fName.text = value;
-        } else {
-            this.lName.text = value;
-        }
     }
 
 }

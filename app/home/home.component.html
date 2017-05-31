@@ -7,22 +7,25 @@
         <button [text]="'Refresh'" width="25%" class="btn btn-warning" (tap)="refresh()"></button>
     </StackLayout>
     <!--<match-score-card [matchId]="liveMatchId" [nsRouterLink]="['/match']"></match-score-card>-->
-    <ListView [items]="items">
+    <Label [text]="'---------- All matches --------'" ></Label>
+    <ListView [items]="allMatches">
         <ng-template let-item="item" let-inx="index">
-            <label [text]="item"></label>
+        </ng-template>
+    </ListView>
+    <Label [text]="'---------- On going matches --------'" ></Label>
+    <ListView [items]="onGoingMatches">
+        <ng-template let-match="item" let-inx="index">
+            <match-score-card [matchDetails]="match" (tap)="scoreCardClicked($event)"></match-score-card>
+        </ng-template>
+    </ListView>
+    <Label [text]="'---------- Recent results --------'" ></Label>
+    <ListView [items]="finishedMatches">
+        <ng-template let-item="item" let-inx="index">
+        </ng-template>
+    </ListView>
+    <Label [text]="'---------- Upcoming matches --------'" ></Label>
+    <ListView [items]="upComingMatches">
+        <ng-template let-item="item" let-inx="index">
         </ng-template>
     </ListView>
 </StackLayout>
-<!--<StackLayout class="page">
-    <TextField #fName (textChange)="nameChange(fName.text, 'fname')" [text]="'vikram'"></TextField>
-    <TextField #lName (textChange)="nameChange(lName.text, 'lname')" ></TextField>
-    <Button [text]="'Add'" (tap)="insert()"></Button>
-    <Button [text]="'Refresh'" (tap)="fetch()"></Button>
-    <Label [text]="'First Name:'+fName.text+', Last Name:'+lName.text"></Label>
-    <Label [text]="'----------------------------'"></Label>
-    <ListView [items]="people">
-        <template let-person="item">
-            <Label text="{{ person.firstname }} {{ person.lastname }}"></Label>
-        </template>
-    </ListView>
-</StackLayout>-->
