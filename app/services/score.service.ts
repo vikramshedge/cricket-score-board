@@ -44,4 +44,15 @@ export class ScoreService {
         });
         return promise;
     }
+
+    updateScore(score: TotalScore): Promise<boolean> {
+        let tempInstance = this;
+        let sqlStr: string = "UPDATE score_details SET runs = "+ score.runs +", wickets = "+score.wickets+", balls = "+score.balls+", ballsOfCurrentOver = "+score.ballsOfCurrentOver+", overs = "+score.overs+" WHERE id = "+score.id+";";
+        let promise: Promise<boolean> = new Promise(function(resolve, reject){
+            tempInstance._dbService.insert(sqlStr).then(id => {
+                return ((id > 0) ? resolve(true) : reject(false));
+            }).catch(error=> reject(error));
+        });
+        return promise;
+    }
 }
