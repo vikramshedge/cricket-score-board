@@ -1,5 +1,6 @@
 import * as dialogs from "ui/dialogs";
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { Item } from "./../item/item";
 import { MatchDetails } from "./../match/match-details";
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
     varTime: string;
     onGoingMatches: MatchDetails[];
 
-    constructor(private _itemService: ItemService, private _matchService: MatchService) { }
+    constructor(private _itemService: ItemService, private _matchService: MatchService, private router: Router) { }
 
     ngOnInit(): void {
         // this.items = this.itemService.getItems();
@@ -35,7 +36,10 @@ export class HomeComponent implements OnInit {
 
     scoreCardClicked(eventData: any){
         console.log("Match card clicked in home:");
-        console.dir(eventData);
+        // console.dir(eventData);
+        let match: MatchDetails = eventData.matchDetails;
+        console.log("routing to edit score from hone");
+        this.router.navigate(["edit_score", match.matchId])
     }
 
     showAlert(eventData){

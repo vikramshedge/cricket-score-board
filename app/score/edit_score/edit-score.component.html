@@ -5,7 +5,7 @@
         <Button [text]="'End'" col="2"></Button>
     </GridLayout>
 </ActionBar>
-<StackLayout margin="1%">
+<StackLayout margin="1%" *ngIf="matchDetails">
     <match-score-card [matchDetails]="matchDetails"></match-score-card>
     <Label [text]="'-------------------------------------------------------'" textAlignment="center"></Label>
     <StackLayout orientation="horizontal">

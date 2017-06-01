@@ -15,8 +15,7 @@ export class MatchScoreCardComponent implements OnInit {
     @Output() tap: EventEmitter<any> = new EventEmitter();
     
     ngOnInit() {
-        console.log("TeamA:"+this.matchDetails.teamA.shortName);
-        console.log("TeamB:"+this.matchDetails.teamB.shortName);
+        
     }
 
     clickEventHandler(event){

@@ -1,7 +1,5 @@
-import { Component, OnInit,OnChanges, SimpleChanges, Input } from "@angular/core";
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
+import { Component, OnInit,OnChanges, SimpleChanges } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 
 import { Ball } from "./../ball/ball";
 import { MatchDetails } from "./../../match/match-details";
@@ -14,8 +12,7 @@ import { MatchService } from "./../../services/match.service"
     selector : "edit-score",
     moduleId : module.id,
     templateUrl: "./edit-score.component.html",
-    styleUrls: ['./edit-score.component.css'],
-    inputs: ['matchDetails']
+    styleUrls: ['./edit-score.component.css']
 })
 
 export class EditScoreComponent implements OnInit {
@@ -31,14 +28,11 @@ export class EditScoreComponent implements OnInit {
     constructor(private _matchService: MatchService, private route: ActivatedRoute){}
 
     ngOnInit(){
-        this.route.params.switchMap((params: Params) => {
-            console.log("Edit score: activatedRouteParams: ");
-            console.dir(this.route.params["data"]);
-            // this.matchDetails = 
-            return this.route.data;
-        });
-        this._matchService.getMatch(this.matchId).then((match: MatchDetails)=>{
+        console.log("In edit score component");
+        this.matchId = this.route.snapshot.params['matchId'];
+        let tmpVar = this._matchService.getMatch(this.matchId).then((match: MatchDetails)=>{
             this.matchDetails = match;
+            
             if (this.matchDetails.balls.length > 0) {
                 this.currentBall = this.matchDetails.balls[this.matchDetails.balls.length-1];
             } else {
@@ -48,10 +42,8 @@ export class EditScoreComponent implements OnInit {
 
             this.getCurrentTeam();
             this.calculatePreviewScore();
-            // console.log("Batting team, in EditScore: ");
-            // console.dump(this.battingTeam.shortName);
         }).catch(error => {
-            console.log("Edid score: unable to get match details, error: " + error);
+            console.log("Unable to get match details in edit score: "+error);
         });
     }
 

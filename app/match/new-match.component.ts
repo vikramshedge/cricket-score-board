@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewContainerRef } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import 'rxjs/add/operator/switchMap';
+
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 
 import { ModalViewComponent } from "./../modal/modal-view.component";
@@ -28,11 +30,17 @@ export class NewMatchComponent implements OnInit, AfterViewInit {
     scoreB: TotalScore;
     
     constructor(private router: Router, private _dbService: DbService, private _scoreService: ScoreService,
-        private _matchService: MatchService, private _modalService: ModalDialogService, private vcRef: ViewContainerRef){
+        private _matchService: MatchService, private _modalService: ModalDialogService, private vcRef: ViewContainerRef, private route: ActivatedRoute){
 
     }
     
     ngOnInit() {
+        console.log("In new match component");
+        let data = this.route.params.switchMap((params: Params) => {
+            console.log("Edit score: activatedRouteParams: ");
+            return params['data'];
+        });
+        console.dir(data["destination"]["_value"]["data"]);        
         
     }
 
