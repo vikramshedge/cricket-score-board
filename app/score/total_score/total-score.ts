@@ -1,5 +1,4 @@
 import { Ball } from "./../ball/ball";
-import { ScoreService } from "./../../services/score.service";
 
 export class TotalScore {
     id: number;
@@ -10,19 +9,15 @@ export class TotalScore {
     ballsOfCurrentOver: number = 0;
     overs: number = 0;
 
-    constructor(private _scoreServices: ScoreService) {}
+    constructor() {}
 
     addBall(newBall: Ball) {
-        // console.log("Add new ball, run: " + newBall.run.selectedElement.value);
         this.allBallS.push(newBall);
         this.runs = this.runs + newBall.run.selectedElement.value;
         this.runs = this.runs + (newBall.ballType.selectedElement.value != 'okay' ? 1 : 0);
         this.balls = this.balls + (newBall.ballType.selectedElement.value === 'okay' ? 1 : 0);
         this.wickets = this.wickets + (newBall.wkt.selectedElement.value === 'out' ? 1 : 0);
-        // console.log("Total runs: " + this.runs);
-        // console.log("Balls[] count in total score: " + this.allBallS.length);
         this.updateOvers();
-        this.
     }
 
     updateOvers() {

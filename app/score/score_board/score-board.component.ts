@@ -1,5 +1,7 @@
 import { Component, OnInit,OnChanges, SimpleChanges } from "@angular/core";
 import {TotalScore} from "./../total_score/total-score";
+// import {Subscription} from "rxjs";
+import {ScoreService} from "./../.../../../services/score.service";
 
 @Component({
     selector : "score-board",
@@ -11,16 +13,22 @@ import {TotalScore} from "./../total_score/total-score";
 
 export class ScoreBoardComponent implements OnInit {
     teamName: string = "NoName";
-    runs: string = "74";
-    wickets: string = "3";
-    overs: string = "5";
-    balls: string = "4";
+    runs: string = "0";
+    wickets: string = "0";
+    overs: string = "0";
+    balls: string = "0";
 
     totalScore: TotalScore;
 
+    // scoreChangedSubscription: Subscription;
+    
+    constructor(private _scoreSercie: ScoreService){}
+
+
     ngOnInit(){
-        // console.log("Total Score: ");
-        // console.dump(this.totalScore);
+        // this.scoreChangedSubscription = this._scoreSercie.scoreChanged$.subscribe((score: TotalScore) => {
+        //     this.totalScore = score;
+        // });
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -6,7 +6,8 @@ import { MatchDetails } from "./../../match/match-details";
 import { Team } from "./../../team/team";
 import { TotalScore } from "./../total_score/total-score";
 
-import { MatchService } from "./../../services/match.service"
+import { MatchService } from "./../../services/match.service";
+import { ScoreService } from "./../../services/score.service";
 
 @Component({
     selector : "edit-score",
@@ -25,7 +26,7 @@ export class EditScoreComponent implements OnInit {
     bowlingScore: TotalScore;
     previewScore: TotalScore;
 
-    constructor(private _matchService: MatchService, private route: ActivatedRoute){}
+    constructor(private _matchService: MatchService, private _scoreService: ScoreService, private route: ActivatedRoute){}
 
     ngOnInit(){
         console.log("In edit score component");
@@ -72,6 +73,7 @@ export class EditScoreComponent implements OnInit {
 
     submitCurrentBall() {
         this.battingScore.addBall(this.currentBall);
+        this._scoreService.updateScore(this.battingScore);
         this.currentBall = new Ball();
         this.calculatePreviewScore();
     }

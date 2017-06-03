@@ -4,8 +4,13 @@ import { Result } from "./result";
 import { TotalScore } from "./../score/total_score/total-score";
 import { DbService } from "./db.service";
 
+// import {Observable, Subject} from "rxjs";
+
 @Injectable()
 export class ScoreService {
+
+    // private scoreChangedSource = new Subject<TotalScore>();
+    // scoreChanged$ = this.scoreChangedSource.asObservable();
 
     constructor(private _dbService: DbService){}
 
@@ -54,5 +59,10 @@ export class ScoreService {
             }).catch(error=> reject(error));
         });
         return promise;
+    }
+
+    scoreChanged(score: TotalScore){
+        // Notify score card component
+        // this.scoreChangedSource.next(score);
     }
 }
