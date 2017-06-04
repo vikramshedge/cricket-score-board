@@ -15,6 +15,7 @@ var Sqlite = require("nativescript-sqlite");
     templateUrl: "./home.component.html",
     styleUrls: ["./home.component.css"]
 })
+
 export class HomeComponent implements OnInit {
     items: string[];
     varTime: string;
@@ -24,14 +25,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         // this.items = this.itemService.getItems();
-        this.items = ['Live score here', 'recent results here', 'upcoming matches here'];
-        this.varTime = Date().toString();
-        this._matchService.getAllMatches().then((matches: MatchDetails[])=>{
-            this.onGoingMatches = matches;
-            console.log("Count of matches: "+this.onGoingMatches.length);
-        }).catch(error => {
-            console.log("Home.component.ts: Unable to get all matches");
-        })
+        this.refresh();
     }
 
     scoreCardClicked(eventData: any){
@@ -45,6 +39,17 @@ export class HomeComponent implements OnInit {
     showAlert(eventData){
         console.log("Start new match clicked");
         dialogs.alert("New match clicked");
+    }
+
+    refresh(){
+        this.items = ['Live score here', 'recent results here', 'upcoming matches here'];
+        this.varTime = Date().toString();
+        this._matchService.getAllMatches().then((matches: MatchDetails[])=>{
+            this.onGoingMatches = matches;
+            console.log("Count of matches: "+this.onGoingMatches.length);
+        }).catch(error => {
+            console.log("Home.component.ts: Unable to get all matches");
+        });
     }
 
 }
